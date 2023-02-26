@@ -597,7 +597,7 @@ public class SAXBuilder {
         } else {
             try {
                 // Create SAX parser.
-            	parser = JAXPParserFactory.createParser(validate, features, properties);
+                parser = JAXPParserFactory.createParser(validate, features, properties);
                 // Configure parser
                 setFeaturesAndProperties(parser, false);
             }
@@ -974,7 +974,7 @@ public class SAXBuilder {
      * @throws MalformedURLException if there's a problem constructing a URL
      */
     private static URL fileToURL(File file) throws MalformedURLException {
-    	StringBuilder buffer = new StringBuilder();
+        StringBuilder buffer = new StringBuilder();
         String path = file.getAbsolutePath();
 
         // Convert non-URL style file separators

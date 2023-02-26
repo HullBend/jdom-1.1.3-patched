@@ -581,7 +581,6 @@ public class SAXOutputter {
         }
     }
 
-
     /**
      * This will output the <code>JDOM Document</code>, firing off the
      * SAX events that have been registered.
@@ -964,7 +963,7 @@ public class SAXOutputter {
             }
         }
         
-        // Fire any namespace on Attributes that were not explicity added as additionals.
+        // Fire any namespace on Attributes that were not explicitly added as additionals.
         List attributes = element.getAttributes();
         if (attributes != null) {
             Iterator itr = attributes.iterator();
@@ -972,10 +971,10 @@ public class SAXOutputter {
                 Attribute att = (Attribute)itr.next();
                 ns = att.getNamespace();
                 if (ns == Namespace.NO_NAMESPACE) {
-                	// Issue #60
-                	// no-prefix attributes are always in the NO_NAMESPACE
-                	// namespace. This prefix mapping is implied for Attributes.
-                	continue;
+                    // Issue #60
+                    // no-prefix attributes are always in the NO_NAMESPACE
+                    // namespace. This prefix mapping is implied for Attributes.
+                    continue;
                 }
                 String prefix = ns.getPrefix();
                 String uri = namespaces.getURI(prefix);
@@ -1193,7 +1192,7 @@ public class SAXOutputter {
 
     /**
      * <p>
-     *  This will be called for each chunk of comment data encontered.
+     *  This will be called for each chunk of comment data encountered.
      * </p>
      *
      * @param commentText all text in a comment, including whitespace.
@@ -1230,11 +1229,10 @@ public class SAXOutputter {
         }
     }
 
-
     /**
      * <p>
      * Appends a namespace declaration in the form of a xmlns attribute to
-     * an attribute list, crerating this latter if needed.
+     * an attribute list, creating this latter if needed.
      * </p>
      *
      * @param atts <code>AttributeImpl</code> where to add the attribute.
@@ -1340,9 +1338,9 @@ public class SAXOutputter {
         // available then the getXMLReader call fails and we skip
         // to the hard coded default parser
         try {
-        	SAXParserFactory factory = SAXParserFactory.newInstance();
-        	SAXParser jaxpParser = factory.newSAXParser();
-        	parser = jaxpParser.getXMLReader();
+            SAXParserFactory factory = SAXParserFactory.newInstance();
+            SAXParser jaxpParser = factory.newSAXParser();
+            parser = jaxpParser.getXMLReader();
         } catch (Exception e) {
             //e.printStackTrace();
         }

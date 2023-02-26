@@ -88,7 +88,7 @@ public class JAXPDOMAdapter extends AbstractDOMAdapter {
     public Document getDocument(InputStream in, boolean validate)
         throws JDOMException {
         try {
-        	DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             factory.setValidating(validate);
             factory.setNamespaceAware(true);
 
@@ -113,9 +113,9 @@ public class JAXPDOMAdapter extends AbstractDOMAdapter {
     public Document createDocument() 
         throws JDOMException {
         try {
-        	DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        	DocumentBuilder newDocBuilder = factory.newDocumentBuilder();
-        	return newDocBuilder.newDocument();
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder newDocBuilder = factory.newDocumentBuilder();
+            return newDocBuilder.newDocument();
         } catch (Exception e) {
             throw new JDOMException("Reflection failed while creating new JAXP document", e); 
         }

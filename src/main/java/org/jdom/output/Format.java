@@ -425,7 +425,6 @@ public class Format implements Cloneable {
         return format;
     }
 
-
     /**
      * Handle common charsets quickly and easily.
      */
@@ -449,7 +448,7 @@ public class Format implements Cloneable {
             else {
                 bits = 0;
                 try {
-                	encoder = Charset.forName(encoding).newEncoder();
+                    encoder = Charset.forName(encoding).newEncoder();
                 }
                 catch (Exception ignored) {
                 }
@@ -481,7 +480,7 @@ public class Format implements Cloneable {
 
                 if (encoder != null) {
                     try {
-                    	return !encoder.canEncode(ch);
+                        return !encoder.canEncode(ch);
                     }
                     catch (Exception ignored) {
                     }
@@ -493,7 +492,6 @@ public class Format implements Cloneable {
             }
         }
     }
-
 
     /**
      * Class to signify how text should be handled on output.  The following
