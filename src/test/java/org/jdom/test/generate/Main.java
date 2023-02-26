@@ -52,15 +52,6 @@ import java.util.Properties;
  */
 public final class Main {
 
-	/** All the options an a synopsis */
-	private final static String[] options = {
-		"-ui",        // Run the Swing GUI.
-		"-source",    // Specify the source class.
-		"-rootdir",    // Specify the root directory of the jdom-test.
-		"-outputFile", // Specify a single file to add all test methods to.
-		"-report"    // Report on how upto date the test case is.
-	};
-
 	/** Name of the source class */
 	private static String source;
 
@@ -69,9 +60,6 @@ public final class Main {
 	
 	/** file name for combined source code */
 	private static String outputFile = ".";
-
-	/** Run the GUI */
-	private static boolean ui;
 
 	/**
 	 * Main entry point.
@@ -90,10 +78,8 @@ public final class Main {
 		// Put in the defaults.
 		props.put("rootdir", rootDir);
 
-		for(int i=0; i<args.length; i++) {
-			if (args.equals("-ui")) {
-				ui = true;
-			} else if (args[i].equals("-source")) {
+		for (int i = 0; i < args.length; i++) {
+			if (args[i].equals("-source")) {
 				source = args[++i];
 				props.put("source", source);
 			} else if (args[i].equals("-rootdir")) {
@@ -106,7 +92,7 @@ public final class Main {
 				System.out.println( "unknown argument "+args[i]);
 			}
 		}
-		
+
 		// Must have a source directory and a root directory.
 		if (source == null) {
 			usage();
@@ -115,23 +101,14 @@ public final class Main {
 		TestCaseGenerator tcg = new TestCaseGenerator(props);
 
 		// Off we go.
-		if (ui) {
-			runUI(props);
-		} else {
-			try {
-				tcg.generate();
-			} catch(GeneratorException ge) {
-				System.out.println(ge.getMessage());
-				ge.printStackTrace();
-			}
+		try {
+			tcg.generate();
+		} catch(GeneratorException ge) {
+			System.out.println(ge.getMessage());
+			ge.printStackTrace();
 		}
 	}
-	/**
-	 * Run the GUI passing in the command line options.
-	 */
-	private static void runUI(Properties props) {
-	
-	}
+
 	/**
 	 * Display a usage summary to the user.
 	 */
@@ -141,8 +118,7 @@ public final class Main {
 		System.out.println("Options are;");
 
 		System.out.println("");
-		
-		System.out.println("-ui       <Run swing based GUI (1.2 only)>");
+
 		System.out.println("-source   <Source class e.g. org.jdom.Element>");
 		System.out.println("-rootdir  <Root directory for output files>");
 		System.out.println("-report   <Check that -source class is upto date>");
