@@ -1,4 +1,6 @@
 /.settings/
 /target/
+/tmp/
+/upload/
 /.classpath
 /.project
