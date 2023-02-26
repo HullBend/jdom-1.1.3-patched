@@ -13,7 +13,6 @@ import org.jdom.*;
 import java.io.*;
 import java.util.*;
 import org.jdom.output.*;
-import org.jdom.input.*;
 
 public final class TestDocument
 extends junit.framework.TestCase

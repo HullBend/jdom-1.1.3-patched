@@ -66,9 +66,7 @@ import java.util.*;
 
 import org.jdom.*;
 import java.io.*;
-import java.util.*;
 import org.jdom.output.*;
-import org.omg.PortableInterceptor.SUCCESSFUL;
 
 public final class TestElement
         extends junit.framework.TestCase {
