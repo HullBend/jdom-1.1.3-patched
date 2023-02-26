@@ -91,7 +91,7 @@ final public class Verifier {
         }
 
         // No colons allowed, since elements handle this internally
-        if (name.indexOf(":") != -1) {
+        if (name.indexOf(':') != -1) {
             return "Element names cannot contain colons";
         }
 
@@ -115,7 +115,7 @@ final public class Verifier {
         }
 
         // No colons are allowed, since attributes handle this internally
-        if (name.indexOf(":") != -1) {
+        if (name.indexOf(':') != -1) {
             return "Attribute names cannot contain colons";
         }
 
@@ -258,7 +258,7 @@ final public class Verifier {
         }
 
         // No colons allowed
-        if (prefix.indexOf(":") != -1) {
+        if (prefix.indexOf(':') != -1) {
             return "Namespace prefixes cannot contain colons";
         }
 
@@ -446,7 +446,7 @@ final public class Verifier {
         }
 
         // No colons allowed, per Namespace Specification Section 6
-        if (target.indexOf(":") != -1) {
+        if (target.indexOf(':') != -1) {
             return "Processing instruction targets cannot contain colons";
         }
 
@@ -512,6 +512,7 @@ final public class Verifier {
         // If we got here, everything is OK
         return null;
     }
+
     /**
      * This is a utility function to decode a non-BMP 
      * UTF-16 surrogate pair.
@@ -620,7 +621,7 @@ final public class Verifier {
                    first + "\"";
         }
         // Ensure legal content for non-first chars
-        for (int i=1, len = name.length(); i<len; i++) {
+        for (int i = 1, len = name.length(); i < len; i++) {
             char c = name.charAt(i);
             if (!isXMLNameCharacter(c)) {
                 return "XML names cannot contain the character \"" + c + "\"";
@@ -708,7 +709,14 @@ final public class Verifier {
      * @return true if the character is a high surrogate, false otherwise
      */
     public static boolean isHighSurrogate(char ch) {
-    	return (ch >= 0xD800 && ch <= 0xDBFF);
+		// faster way to do it is with bit manipulation....
+		// return (ch >= 0xD800 && ch <= 0xDBFF);
+		// A high surrogate has the bit pattern:
+		//    110110xx xxxxxxxx
+		// ch & 0xFC00 does a bit-mask of the most significant 6 bits (110110)
+		// return 0xD800 == (ch & 0xFC00);
+		// as it happens, it is faster to do a bit-shift,
+		return 0x36 == ch >>> 10;
     }
     
     /**
@@ -719,7 +727,9 @@ final public class Verifier {
      * @return true if the character is a low surrogate, false otherwise.
      */
     public static boolean isLowSurrogate(char ch) {
-    	return (ch >= 0xDC00 && ch <= 0xDFFF);
+		// faster way to do it is with bit manipulation....
+		// return (ch >= 0xDC00 && ch <= 0xDFFF);
+		return 0x37 == ch >>> 10;
     }
 
     /**
@@ -1209,13 +1219,12 @@ final public class Verifier {
         if (c == 0x0E46) return true;
         if (c == 0x0EC6) return true;
         if (c == 0x3005) return true;
-                                       
+
         if (c < 0x3031) return false;  if (c <= 0x3035) return true;
         if (c < 0x309D) return false;  if (c <= 0x309E) return true;
         if (c < 0x30FC) return false;  if (c <= 0x30FE) return true;
-        
+
         return false;
-        
     }
       
     /**
@@ -1260,7 +1269,7 @@ final public class Verifier {
      * @return <code>boolean</code> true if it's a whitespace, false otherwise
      */
     public static boolean isXMLWhitespace(char c) {
-        if (c==' ' || c=='\n' || c=='\t' || c=='\r' ){
+        if (c == ' ' || c == '\n' || c == '\t' || c == '\r' ){
             return true;
         }
         return false;

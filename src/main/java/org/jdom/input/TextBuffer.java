@@ -63,11 +63,11 @@ import org.jdom.*;
  * parsing where the common case is that you get only one chunk of characters
  * per text section. TextBuffer stores the first chunk of characters in a
  * String, which can just be returned directly if no second chunk is received.
- * Subsequent chunks are stored in a supplemental char array (like StringBuffer
+ * Subsequent chunks are stored in a supplemental char array (like StringBuilder
  * uses). In this case, the returned text will be the first String chunk,
  * concatenated with the subsequent chunks stored in the char array. This
  * provides optimal performance in the common case, while still providing very
- * good performance in the uncommon case. Furthermore, avoiding StringBuffer
+ * good performance in the uncommon case. Furthermore, avoiding StringBuilder
  * means that no extra unused char array space will be kept around after parsing
  * is through.
  *
@@ -91,22 +91,24 @@ class TextBuffer {
 
     /** Constructor */
     TextBuffer() {
-        array = new char[4096]; // initial capacity
+        array = null; // initially null
         arraySize = 0;
     }
 
     /** Append the specified text to the text value of this buffer. */
     void append(char[] source, int start, int count) {
-        if (prefixString == null) {
-            // This is the first chunk, so we'll store it in the prefix string
-            prefixString = new String(source, start, count);
-        }
-        else {
-            // This is a subsequent chunk, so we'll add it to the char array
-            ensureCapacity(arraySize + count);
-            System.arraycopy(source, start, array, arraySize, count);
-            arraySize += count;
-        }
+    	if (count > 0) {
+	        if (prefixString == null) {
+	            // This is the first chunk, so we'll store it in the prefix string
+	            prefixString = new String(source, start, count);
+	        }
+	        else {
+	            // This is a subsequent chunk, so we'll add it to the char array
+	            ensureCapacity(arraySize + count);
+	            System.arraycopy(source, start, array, arraySize, count);
+	            arraySize += count;
+	        }
+    	}
     }
 
     /** Returns the size of the text value. */
@@ -131,14 +133,14 @@ class TextBuffer {
         }
 
         int size = prefixString.length();
-        for(int i = 0; i < size; i++) {
-            if ( !Verifier.isXMLWhitespace(prefixString.charAt(i))) {
+        for (int i = 0; i < size; i++) {
+            if (!Verifier.isXMLWhitespace(prefixString.charAt(i))) {
                 return false;
             }
         }
 
-        for(int i = 0; i < arraySize; i++) {
-            if ( !Verifier.isXMLWhitespace(array[i])) {
+        for (int i = 0; i < arraySize; i++) {
+            if (!Verifier.isXMLWhitespace(array[i])) {
                 return false;
             }
         }
@@ -153,7 +155,7 @@ class TextBuffer {
 
         String str = "";
         if (arraySize == 0) {
-            // Char array is empty, so the text value is just prefixString.
+            // Char array is null or empty, so the text value is just prefixString.
             str = prefixString;
         }
         else {
@@ -169,12 +171,15 @@ class TextBuffer {
 
     // Ensure that the char array has room for at least "csize" characters.
     private void ensureCapacity(int csize) {
+    	if (array == null) {
+    		array = new char[1024]; // initial capacity
+    	}
         int capacity = array.length;
         if (csize > capacity) {
             char[] old = array;
             int nsize = capacity;
             while (csize > nsize) {
-                nsize += (capacity/2);
+                nsize += (capacity / 2);
             }
             array = new char[nsize];
             System.arraycopy(old, 0, array, 0, arraySize);

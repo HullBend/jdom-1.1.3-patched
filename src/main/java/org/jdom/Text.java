@@ -71,9 +71,6 @@ public class Text extends Content {
     static final String EMPTY_STRING = "";
 
     /** The actual character content */
-    // XXX See http://www.servlets.com/archive/servlet/ReadMsg?msgId=8612
-    // from elharo for a description of why Java characters may not suffice
-    // long term
     protected String value;
 
     /**
@@ -207,8 +204,13 @@ public class Text extends Content {
             throw new IllegalDataException(str, "character content", reason);
         }
 
-        if (str.length() > 0) {
-             value += str;
+        int len = str.length();
+        if (len > 0) {
+			if (value != null) {
+				value = new StringBuilder(value.length() + len).append(value).append(str).toString();
+			} else {
+				value = str;
+			}
         }
     }
 
@@ -219,10 +221,18 @@ public class Text extends Content {
      * @param text Text node to append.
      */
     public void append(Text text) {
-        if (text == null) {
+        if (text == null || text.getText() == null) {
             return;
         }
-        value += text.getText();
+        String str = text.getText();
+        int len = str.length();
+        if (len > 0) {
+			if (value != null) {
+				value = new StringBuilder(value.length() + len).append(value).append(str).toString();
+			} else {
+				value = str;
+			}
+        }
     }
 
     /**
