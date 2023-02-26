@@ -97,18 +97,18 @@ class TextBuffer {
 
     /** Append the specified text to the text value of this buffer. */
     void append(char[] source, int start, int count) {
-    	if (count > 0) {
-	        if (prefixString == null) {
-	            // This is the first chunk, so we'll store it in the prefix string
-	            prefixString = new String(source, start, count);
-	        }
-	        else {
-	            // This is a subsequent chunk, so we'll add it to the char array
-	            ensureCapacity(arraySize + count);
-	            System.arraycopy(source, start, array, arraySize, count);
-	            arraySize += count;
-	        }
-    	}
+        if (count > 0) {
+            if (prefixString == null) {
+                // This is the first chunk, so we'll store it in the prefix string
+                prefixString = new String(source, start, count);
+            }
+            else {
+                // This is a subsequent chunk, so we'll add it to the char array
+                ensureCapacity(arraySize + count);
+                System.arraycopy(source, start, array, arraySize, count);
+                arraySize += count;
+            }
+        }
     }
 
     /** Returns the size of the text value. */
@@ -171,9 +171,9 @@ class TextBuffer {
 
     // Ensure that the char array has room for at least "csize" characters.
     private void ensureCapacity(int csize) {
-    	if (array == null) {
-    		array = new char[1024]; // initial capacity
-    	}
+        if (array == null) {
+            array = new char[1024]; // initial capacity
+        }
         int capacity = array.length;
         if (csize > capacity) {
             char[] old = array;

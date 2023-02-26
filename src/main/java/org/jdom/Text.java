@@ -206,11 +206,11 @@ public class Text extends Content {
 
         int len = str.length();
         if (len > 0) {
-			if (value != null) {
-				value = new StringBuilder(value.length() + len).append(value).append(str).toString();
-			} else {
-				value = str;
-			}
+            if (value != null) {
+                value = new StringBuilder(value.length() + len).append(value).append(str).toString();
+            } else {
+                value = str;
+            }
         }
     }
 
@@ -227,11 +227,11 @@ public class Text extends Content {
         String str = text.getText();
         int len = str.length();
         if (len > 0) {
-			if (value != null) {
-				value = new StringBuilder(value.length() + len).append(value).append(str).toString();
-			} else {
-				value = str;
-			}
+            if (value != null) {
+                value = new StringBuilder(value.length() + len).append(value).append(str).toString();
+            } else {
+                value = str;
+            }
         }
     }
 
